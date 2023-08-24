@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using SaleStore.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// ALL services must be added BEFORE the build
+
 builder.Services.AddControllersWithViews();
+
+// we add EF Core and configure which class have the implementation of DbContext 
+// via a helper method we get the connection string
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
