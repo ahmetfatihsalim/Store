@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SaleStore.Models;
 
 namespace SaleStore.Data
 {
@@ -13,5 +14,13 @@ namespace SaleStore.Data
         {
 
         }
+
+        // To create tables in our database
+        // First create a model
+        // Set a related DbSet in this class
+        // add migration from nuget package console : add-migration hellosomething
+        // in same package manager, run : update-database
+        // yay magic... not really
+        public DbSet<Category> Categories { get; set; }
     }
 }
