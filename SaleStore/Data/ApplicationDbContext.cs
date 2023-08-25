@@ -22,5 +22,16 @@ namespace SaleStore.Data
         // in same package manager, run : update-database
         // yay magic... not really
         public DbSet<Category> Categories { get; set; }
+
+        // Overriding our data model by adding default values to our db
+        // Every first time our application gets implemented data columns that defined here will be implemented to our database as well
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { ID = 1, Name = "Action", DisplayOrder = 1},
+                new Category { ID = 2, Name = "SciFi", DisplayOrder = 2},
+                new Category { ID = 3, Name = "History", DisplayOrder = 3}
+            );
+        }
     }
 }
