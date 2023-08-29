@@ -18,5 +18,10 @@ namespace SaleStore.Controllers
             List <Category> categories = _db.Categories.ToList(); // This should be in a service. This looks disgusting
             return View(categories);
         }
+
+        public IActionResult Create() // View name and action name must match
+        {
+            return View(); // If you define the object in the view there is no need to give any object as parameter.
+        }
     }
 }
