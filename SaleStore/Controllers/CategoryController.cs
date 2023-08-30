@@ -23,5 +23,13 @@ namespace SaleStore.Controllers
         {
             return View(); // If you define the object in the view there is no need to give any object as parameter.
         }
+
+        [HttpPost]
+        public IActionResult Create(Category category) // REST or something
+        {
+            _db.Categories.Add(category);
+            _db.SaveChanges();
+            return RedirectToAction("Index"/*"Category"*/); // if it was in different Controller, you also pass the controller name as well
+        }
     }
 }

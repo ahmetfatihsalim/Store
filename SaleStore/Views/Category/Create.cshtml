@@ -12,12 +12,12 @@
             <hr />
         </div>
         <div class="mb-3 p-1 row"> @*whoa resposiveness*@
-            <label class="p-0">Category Name</label>
-            <input type="text" class="form-control" />
+            <label asp-for="Name" class="p-0"></label>
+            <input asp-for="Name" class="form-control" />
         </div>
         <div class="mb-3 p-1 row">
-            <label class="p-0">Display Order</label>
-            <input type="text" class="form-control" />
+            <label asp-for="DisplayOrder" class="p-0"></label>
+            <input asp-for="DisplayOrder" class="form-control" /> @*No need to define type for we get the type property from binded Category property*@
         </div>
         <div class="row">
             <div class="col-6 col-md-6"> @*whoa resposiveness. checks width of screen*@

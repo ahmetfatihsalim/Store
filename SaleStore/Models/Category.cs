@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SaleStore.Models
 {
@@ -7,7 +8,9 @@ namespace SaleStore.Models
         [Key]
         public int ID { get; set; }
         [Required]
+        [DisplayName("Category Name")]
         public string Name { get; set; }
+        [DisplayName("Display Order")]
         public int DisplayOrder { get; set; }
     }
 }
