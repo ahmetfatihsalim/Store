@@ -11,13 +11,18 @@
             <h2 class="text-primary">Create Category</h2>
             <hr />
         </div>
+        <!--<div asp-validation-summary="All"></div>--> @*summarizes all types of errors*@
+        <!--<div asp-validation-summary="ModelOnly"></div>--> @*summarizes only model erors. does not summarize class property errors*@
+        <!--<div asp-validation-summary="None"></div>--> @*does not summarize any errors*@
         <div class="mb-3 p-1 row"> @*whoa resposiveness*@
             <label asp-for="Name" class="p-0"></label>
             <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
             <label asp-for="DisplayOrder" class="p-0"></label>
             <input asp-for="DisplayOrder" class="form-control" /> @*No need to define type for we get the type property from binded Category property*@
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
         </div>
         <div class="row">
             <div class="col-6 col-md-6"> @*whoa resposiveness. checks width of screen*@
