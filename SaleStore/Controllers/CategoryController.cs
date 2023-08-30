@@ -27,9 +27,21 @@ namespace SaleStore.Controllers
         [HttpPost]
         public IActionResult Create(Category category) // REST or something
         {
-            _db.Categories.Add(category);
-            _db.SaveChanges();
-            return RedirectToAction("Index"/*"Category"*/); // if it was in different Controller, you also pass the controller name as well
+            /*if (category.Name == category.DisplayOrder.ToString()) // custom validations
+            {
+                ModelState.AddModelError("Name", "Name and Display Order cannot be same"); // adding custom error check to given class property
+            }
+            if (category.Name != null && category.Name.ToLower() == "test")
+            {
+                ModelState.AddModelError("", "test is an invalid value");
+            }*/
+            if (ModelState.IsValid) // checking validations
+            {
+                _db.Categories.Add(category);
+                _db.SaveChanges();
+            }
+            //return RedirectToAction("Index"/*"Category"*/); // if it was in different Controller, you also pass the controller name as well
+            return View();
         }
     }
 }
