@@ -35,4 +35,13 @@
             </div>
         </div>
     </div>
+
+    <!--<partial name="_ValidationScriptsPartial"/>--> @*consuming normal partial view*@
+
 </form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial"/> @*consuming partial view (script related) which is for client-side validation. In client-side validations, the related page wont refresh unlike server-side validations*@
+    }
+}

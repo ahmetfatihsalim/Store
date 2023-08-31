@@ -27,14 +27,14 @@ namespace SaleStore.Controllers
         [HttpPost]
         public IActionResult Create(Category category) // REST or something
         {
-            /*if (category.Name == category.DisplayOrder.ToString()) // custom validations
+            if (category.Name == category.DisplayOrder.ToString()) // custom validations // these validations wont be hit for class property validations because those validations are handled by client-side thanks to consumed partial view
             {
                 ModelState.AddModelError("Name", "Name and Display Order cannot be same"); // adding custom error check to given class property
             }
             if (category.Name != null && category.Name.ToLower() == "test")
             {
                 ModelState.AddModelError("", "test is an invalid value");
-            }*/
+            }
             if (ModelState.IsValid) // checking validations
             {
                 _db.Categories.Add(category);
