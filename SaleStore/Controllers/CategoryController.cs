@@ -39,6 +39,7 @@ namespace SaleStore.Controllers
             {
                 _db.Categories.Add(category);
                 _db.SaveChanges();
+                TempData["Success"] = "Category created successfully"; // To show error messages
             }
             //return RedirectToAction("Index"/*"Category"*/); // if it was in different Controller, you also pass the controller name as well
             return View();
@@ -69,6 +70,7 @@ namespace SaleStore.Controllers
             {
                 _db.Categories.Update(category);
                 _db.SaveChanges();
+                TempData["Success"] = "Category edited successfully";
             }
             return View();
         }
@@ -101,6 +103,7 @@ namespace SaleStore.Controllers
             {
                 _db.Categories.Remove(category);
                 _db.SaveChanges();
+                TempData["Success"] = "Category deleted successfully";
             }
             return RedirectToAction("Index");
         }
