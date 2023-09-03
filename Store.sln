@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaleStore", "SaleStore\SaleStore.csproj", "{5E21E60F-C673-4B61-AFBD-B28F43725D9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleStore_Razor", "SaleStore_Razor\SaleStore_Razor.csproj", "{41B1E87D-41E5-4CD3-AF57-C7B1F4B3D31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaleStore_Razor", "SaleStore_Razor\SaleStore_Razor.csproj", "{41B1E87D-41E5-4CD3-AF57-C7B1F4B3D31B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
