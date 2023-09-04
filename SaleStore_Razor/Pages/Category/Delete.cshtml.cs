@@ -32,6 +32,7 @@ namespace SaleStore_Razor.Pages.Category
             }
             _db.Categories.Remove(category);
             _db.SaveChanges();
+            TempData["Success"] = "Category deleted succesfully";
             return RedirectToPage("Index");
         }
     }

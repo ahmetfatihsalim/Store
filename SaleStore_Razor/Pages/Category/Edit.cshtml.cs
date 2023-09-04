@@ -29,6 +29,7 @@ namespace SaleStore_Razor.Pages.Category
             {
                 _db.Categories.Update(Category);
                 _db.SaveChanges();
+                TempData["Success"] = "Category updated succesfully";
                 return RedirectToPage("Index");
             }
             return Page();
