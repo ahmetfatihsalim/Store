@@ -1,5 +1,6 @@
 ﻿@page
 @model SaleStore_Razor.Pages.Category.IndexModel
+@*Model name gotta be [X]Model format. Also dont put this comment to upper row*@
 @{
 }
 <div class="container">
@@ -10,7 +11,8 @@
             </h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-page="Category/Create" class="btn btn-primary"> @*Rather than Controller and Action, we use asp-pages helper*@
+            <a asp-page="/Category/Create" class="btn btn-primary"> @*Rather than Controller and Action, we use asp-pages helper.
+                                                                    Routing is importent but forward slashes are importanterterer*@
                 <i class="bi bi-plus-circle"></i>&nbsp; Create New Category
             </a>
         </div>
@@ -39,11 +41,11 @@
                     </td>
                     <td>
                         <div class="w-75 btn-group" role="group">
-                            <a asp-page="Category/Edit" asp-route-id="@category.ID" class="btn btn-primary mx-2">
+                            <a asp-page="/Category/Edit" asp-route-id="@category.ID" class="btn btn-primary mx-2">
                                 @*asp-route is still valid here*@
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a asp-page="Category/Edit" asp-route-id="@category.ID" class="btn btn-danger mx-2">
+                            <a asp-page="/Category/Edit" asp-route-id="@category.ID" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash3"></i> Delete
                             </a>
                         </div>
