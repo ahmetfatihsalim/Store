@@ -1,31 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SaleStore_Razor.Data;
-using SaleStore_Razor.Models;
 
 namespace SaleStore_Razor.Pages.Category
 {
-    [BindProperties] // so we can bind stuff from Db
-    public class CreateModel : PageModel
+    [BindProperties]
+    public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _db;
         public Models.Category Category { get; set; }
 
-        public CreateModel(ApplicationDbContext db)
+        public EditModel(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        public void OnGet()
+        public void OnGet(int? id)
         {
-            
+            if (id != null && id != 0)
+            {
+                Category = _db.Categories.Find(id);
+            }
         }
 
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(Category);
+                _db.Categories.Update(Category);
                 _db.SaveChanges();
                 return RedirectToPage("Index");
             }

@@ -1,12 +1,13 @@
 ﻿@page
-@model SaleStore_Razor.Pages.Category.CreateModel
+@model SaleStore_Razor.Pages.Category.EditModel
 @{
 }
 
 <form method="post">
+    <input asp-for="Category.ID" hidden /> @*This line is actually needed here*@
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Create Category</h2>
+            <h2 class="text-primary">Edit Category</h2>
             <hr />
         </div>
         <div class="mb-3 p-1 row">
@@ -21,7 +22,7 @@
         </div>
         <div class="row">
             <div class="col-6 col-md-6">
-                <button type="submit" class="btn btn-primary form-control">Create</button>
+                <button type="submit" class="btn btn-primary form-control">Edit</button>
             </div>
             <div class="col-6 col-md-6">
                 <a asp-page="/Category/Index" class="btn btn-secondary border form-control">
@@ -31,12 +32,10 @@
         </div>
     </div>
 
-    <!--<partial name="_ValidationScriptsPartial"/>--> @*consuming normal partial view*@
-
 </form>
 
 @section Scripts {
     @{
-        <partial name="_ValidationScriptsPartial" /> @*consuming partial view (script related) which is for client-side validation. In client-side validations, the related page wont refresh unlike server-side validations*@
+        <partial name="_ValidationScriptsPartial" />
     }
 }
