@@ -99,12 +99,9 @@ namespace SaleStore.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
-            {
-                _db.Categories.Remove(category);
-                _db.SaveChanges();
-                TempData["Success"] = "Category deleted successfully";
-            }
+            _db.Categories.Remove(category);
+            _db.SaveChanges();
+            TempData["Success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
     }
