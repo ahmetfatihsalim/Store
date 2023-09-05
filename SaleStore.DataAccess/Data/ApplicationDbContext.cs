@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SaleStore.Models;
+using SaleStore.Model;
 
 namespace SaleStore.Data
 {

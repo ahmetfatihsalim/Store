@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SaleStore.Data;
-using SaleStore.Models;
+using SaleStore.Model;
 
 namespace SaleStore.Controllers
 {
