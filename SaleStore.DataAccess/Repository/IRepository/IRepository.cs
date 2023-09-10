@@ -12,11 +12,11 @@ namespace SaleStore.DataAccess.Repository.IRepository
         // Generic interface for our classes and interaction with DB
         IEnumerable<T> GetAll();
         T GetFirstOrDefault(Expression<Func<T,bool>> filter); // we'll use a linq expression which is a function that takes T and returns boolean result
-        void Create(T entity);
+        void Add(T entity);
 
         //void Update(T entity); // Update logic may vary so we dont add update function here
-        void Delete(T entity);
-        void DeleteRange(IEnumerable<T> entities); // delete multiple entities. Get these entities as IEnumerable
+        void Remove(T entity);
+        void RemoveRange(IEnumerable<T> entities); // delete multiple entities. Get these entities as IEnumerable
 
         //void Save(); // In comment for the same reason as update
     }
