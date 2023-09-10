@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SaleStore.Data;
+using SaleStore.DataAccess.Repository.IRepository;
 using SaleStore.Model;
 
 namespace SaleStore.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ICategoryRepository _CategoryRepositoryDb;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(ICategoryRepository db)
         {
-            _db = db;
+            _CategoryRepositoryDb = db; // Example dependecy Injection
         }
 
         public IActionResult Index()
         {
-            List <Category> categories = _db.Categories.ToList(); // This should be in a service. This looks disgusting
+            List<Category> categories = _CategoryRepositoryDb.GetAll().ToList(); // This should be in a service. This looks disgusting
             return View(categories);
         }
 
@@ -37,22 +38,22 @@ namespace SaleStore.Controllers
             }
             if (ModelState.IsValid) // checking validations
             {
-                _db.Categories.Add(category);
-                _db.SaveChanges();
+                _CategoryRepositoryDb.Add(category);
+                _CategoryRepositoryDb.Save();
                 TempData["Success"] = "Category created successfully"; // To show error messages
             }
             //return RedirectToAction("Index"/*"Category"*/); // if it was in different Controller, you also pass the controller name as well
             return View();
         }
 
-        public IActionResult Edit(int? id) 
+        public IActionResult Edit(int? id)
         {
-            if (id==null || id==0)
+            if (id == null || id == 0)
             {
                 return NotFound(); // We can also use any error view
             }
             //Different ways to retrive data from database
-            Category? category = _db.Categories.Find(id); // fastest in this case
+            Category? category = _CategoryRepositoryDb.GetFirstOrDefault(u => u.ID == id); // fastest in this case
             //Category? category1 = _db.Categories.FirstOrDefault(category => category.ID == id);
             //Category? category2 = _db.Categories.Where(category => category.ID == id).FirstOrDefault();
             if (category == null)
@@ -64,12 +65,12 @@ namespace SaleStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Category category) 
+        public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(category);
-                _db.SaveChanges();
+                _CategoryRepositoryDb.Update(category);
+                _CategoryRepositoryDb.Save();
                 TempData["Success"] = "Category edited successfully";
             }
             return View();
@@ -81,7 +82,7 @@ namespace SaleStore.Controllers
             {
                 return NotFound();
             }
-            Category? category = _db.Categories.Find(id);
+            Category? category = _CategoryRepositoryDb.GetFirstOrDefault(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -91,16 +92,16 @@ namespace SaleStore.Controllers
         }
 
         [HttpPost]
-        [ActionName("Delete")] // can't name get and post actions same so we add action name property
+        [ActionName("Delete")] // can't name get and post actions same when they get same type of parameters. So we add action name property
         public IActionResult DeletePOST(int? id)
         {
-            Category? category = _db.Categories.Find(id);
+            Category? category = _CategoryRepositoryDb.GetFirstOrDefault(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
+            _CategoryRepositoryDb.Remove(category);
+            _CategoryRepositoryDb.Save();
             TempData["Success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }

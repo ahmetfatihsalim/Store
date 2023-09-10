@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SaleStore.Data;
+using SaleStore.DataAccess.Repository;
+using SaleStore.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddControllersWithViews();
 // we add EF Core and configure which class have the implementation of DbContext 
 // via a helper method we get the connection string
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
