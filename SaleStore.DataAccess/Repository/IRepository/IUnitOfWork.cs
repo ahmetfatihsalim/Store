@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SaleStore.DataAccess.Repository.IRepository
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork // general interface for the general functions we'll use in other interfaces
     {
+        ICategoryRepository CategoryRepository { get; } // we dont set anything
+
+        void Save();
     }
 }

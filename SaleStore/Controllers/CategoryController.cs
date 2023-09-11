@@ -7,16 +7,16 @@ namespace SaleStore.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _CategoryRepositoryDb;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _CategoryRepositoryDb = db; // Example dependecy Injection
+            _unitOfWork = unitOfWork; // Example dependecy Injection
         }
 
         public IActionResult Index()
         {
-            List<Category> categories = _CategoryRepositoryDb.GetAll().ToList(); // This should be in a service. This looks disgusting
+            List<Category> categories = _unitOfWork.CategoryRepository.GetAll().ToList(); // This should be in a service. This looks disgusting
             return View(categories);
         }
 
@@ -38,8 +38,8 @@ namespace SaleStore.Controllers
             }
             if (ModelState.IsValid) // checking validations
             {
-                _CategoryRepositoryDb.Add(category);
-                _CategoryRepositoryDb.Save();
+                _unitOfWork.CategoryRepository.Add(category);
+                _unitOfWork.Save();
                 TempData["Success"] = "Category created successfully"; // To show error messages
             }
             //return RedirectToAction("Index"/*"Category"*/); // if it was in different Controller, you also pass the controller name as well
@@ -53,7 +53,7 @@ namespace SaleStore.Controllers
                 return NotFound(); // We can also use any error view
             }
             //Different ways to retrive data from database
-            Category? category = _CategoryRepositoryDb.GetFirstOrDefault(u => u.ID == id); // fastest in this case
+            Category? category = _unitOfWork.CategoryRepository.GetFirstOrDefault(u => u.ID == id); // fastest in this case
             //Category? category1 = _db.Categories.FirstOrDefault(category => category.ID == id);
             //Category? category2 = _db.Categories.Where(category => category.ID == id).FirstOrDefault();
             if (category == null)
@@ -69,8 +69,8 @@ namespace SaleStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _CategoryRepositoryDb.Update(category);
-                _CategoryRepositoryDb.Save();
+                _unitOfWork.CategoryRepository.Update(category);
+                _unitOfWork.Save();
                 TempData["Success"] = "Category edited successfully";
             }
             return View();
@@ -82,7 +82,7 @@ namespace SaleStore.Controllers
             {
                 return NotFound();
             }
-            Category? category = _CategoryRepositoryDb.GetFirstOrDefault(u => u.ID == id);
+            Category? category = _unitOfWork.CategoryRepository.GetFirstOrDefault(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
@@ -95,13 +95,13 @@ namespace SaleStore.Controllers
         [ActionName("Delete")] // can't name get and post actions same when they get same type of parameters. So we add action name property
         public IActionResult DeletePOST(int? id)
         {
-            Category? category = _CategoryRepositoryDb.GetFirstOrDefault(u => u.ID == id);
+            Category? category = _unitOfWork.CategoryRepository.GetFirstOrDefault(u => u.ID == id);
             if (category == null)
             {
                 return NotFound();
             }
-            _CategoryRepositoryDb.Remove(category);
-            _CategoryRepositoryDb.Save();
+            _unitOfWork.CategoryRepository.Remove(category);
+            _unitOfWork.Save();
             TempData["Success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }

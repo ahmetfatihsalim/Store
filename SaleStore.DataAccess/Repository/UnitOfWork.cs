@@ -21,6 +21,7 @@ namespace SaleStore.DataAccess.Repository
 
         public void Save()
         {
+            // normally there needs to be more functionalities here for this class to actually be unit of work. Like cancelling token or listening something before saving 
             _db.SaveChanges();
         }
     }
