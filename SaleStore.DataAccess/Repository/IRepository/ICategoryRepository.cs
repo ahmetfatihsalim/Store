@@ -10,6 +10,5 @@ namespace SaleStore.DataAccess.Repository.IRepository
     public interface ICategoryRepository : IRepository<Category> // now we give IRepository it's class
     {
         void Update(Category category);
-        void Save();
     }
 }
