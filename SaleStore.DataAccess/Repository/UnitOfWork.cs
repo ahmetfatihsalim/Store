@@ -12,11 +12,13 @@ namespace SaleStore.DataAccess.Repository
     {
         private ApplicationDbContext _db; // same as category repository
         public ICategoryRepository CategoryRepository { get; private set; }
+        public IProductRepository ProductRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db) // we dont have any base class
         {
             _db = db;
             CategoryRepository = new CategoryRepository(_db);
+            ProductRepository = new ProductRepository(_db);
         }
 
         public void Save()
