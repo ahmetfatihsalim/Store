@@ -36,7 +36,7 @@ namespace SaleStore.Data
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
-                    Id = 1,
+                    ID = 1,
                     Title = "Lorem",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     ISBN = "ABCDEF1234",
@@ -48,7 +48,7 @@ namespace SaleStore.Data
                 },
                 new Product
                 {
-                    Id = 2,
+                    ID = 2,
                     Title = "Ipsum",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
                     ISBN = "ZXCVB0987Y",
@@ -60,7 +60,7 @@ namespace SaleStore.Data
                 },
                 new Product
                 {
-                    Id = 3,
+                    ID = 3,
                     Title = "Dolor",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.",
                     ISBN = "QWERT5678P",
@@ -72,7 +72,7 @@ namespace SaleStore.Data
                 },
                 new Product
                 {
-                    Id = 4,
+                    ID = 4,
                     Title = "Sit",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed.",
                     ISBN = "ASDFG1234H",
@@ -84,7 +84,7 @@ namespace SaleStore.Data
                 },
                 new Product
                 {
-                    Id = 5,
+                    ID = 5,
                     Title = "Amet",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt.",
                     ISBN = "JKLPO6789I",
@@ -96,7 +96,7 @@ namespace SaleStore.Data
                 },
                 new Product
                 {
-                    Id = 6,
+                    ID = 6,
                     Title = "Consectetur",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     ISBN = "MNBVC4321U",
