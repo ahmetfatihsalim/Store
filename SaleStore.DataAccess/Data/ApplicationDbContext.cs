@@ -19,6 +19,7 @@ namespace SaleStore.Data
         // First create a model
         // Set a related DbSet in this class
         // add migration from nuget package console : add-migration hellosomething
+        // to remove a migration : remove-migration //(before update-database)
         // in same package manager, run : update-database
         // yay magic... not really
         public DbSet<Category> Categories { get; set; }
@@ -44,7 +45,9 @@ namespace SaleStore.Data
                     ListPrice = 100,
                     Price = 80,
                     Price50 = 65,
-                    Price100 = 60
+                    Price100 = 60,
+                    CategoryID = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -56,7 +59,9 @@ namespace SaleStore.Data
                     ListPrice = 120,
                     Price = 90,
                     Price50 = 75,
-                    Price100 = 70
+                    Price100 = 70,
+                    CategoryID = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -68,7 +73,9 @@ namespace SaleStore.Data
                     ListPrice = 80,
                     Price = 60,
                     Price50 = 55,
-                    Price100 = 52
+                    Price100 = 52,
+                    CategoryID = 2,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -80,7 +87,9 @@ namespace SaleStore.Data
                     ListPrice = 140,
                     Price = 110,
                     Price50 = 100,
-                    Price100 = 95
+                    Price100 = 95,
+                    CategoryID = 2,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -92,7 +101,9 @@ namespace SaleStore.Data
                     ListPrice = 70,
                     Price = 55,
                     Price50 = 50,
-                    Price100 = 48
+                    Price100 = 48,
+                    CategoryID = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -104,7 +115,9 @@ namespace SaleStore.Data
                     ListPrice = 130,
                     Price = 100,
                     Price50 = 90,
-                    Price100 = 85
+                    Price100 = 85,
+                    CategoryID = 3,
+                    ImageUrl = ""
                 }
             );
         }
