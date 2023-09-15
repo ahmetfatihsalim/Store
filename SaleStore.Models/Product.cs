@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +11,11 @@ namespace SaleStore.Model
 {
     public class Product
     {
+        public Product()
+        {
+            ImageUrl= "";
+        }
+
         [Key]
         public int ID { get; set; }
         [Required]
@@ -38,9 +44,12 @@ namespace SaleStore.Model
         [Range(1, 1000)]
         public double Price100 { get; set; }
 
-        [ForeignKey("CategoryID")]
+        [ForeignKey("CategoryID")] // Defining foreign key
+        [ValidateNever] // this property does not need to get validated
         public Category Category { get; set; }
+        [ValidateNever] // this property does not need to get validated
         public int CategoryID { get; set; }
+        [ValidateNever] // this property does not need to get validated
         public string ImageUrl { get; set; }
 
     }

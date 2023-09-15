@@ -3,53 +3,77 @@
 *@
 @{
 }
-@model Product
+@model ProductViewModel
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+    @*make sure to have multipart/form-data for file uploads*@
     <div class="border p-3 my-4">
         <div class="row pb-2">
             <h2 class="text-primary">Create Product</h2>
             <hr />
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="Title" class="p-0"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
+            <label asp-for="Product.Title" class="p-0"></label>
+            <input asp-for="Product.Title" class="form-control" />
+            <span asp-validation-for="Product.Title" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="Description" class="p-0"></label>
-            <textarea asp-for="Description" class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="Product.Description" class="p-0"></label>
+            <textarea asp-for="Product.Description" class="form-control"></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="ISBN" class="p-0"></label>
-            <input asp-for="ISBN" class="form-control" />
-            <span asp-validation-for="ISBN" class="text-danger"></span>
+            <label asp-for="Product.ISBN" class="p-0"></label>
+            <input asp-for="Product.ISBN" class="form-control" />
+            <span asp-validation-for="Product.ISBN" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="Author" class="p-0"></label>
-            <input asp-for="Author" class="form-control" />
-            <span asp-validation-for="Author" class="text-danger"></span>
+            <label asp-for="Product.Author" class="p-0"></label>
+            <input asp-for="Product.Author" class="form-control" />
+            <span asp-validation-for="Product.Author" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="ListPrice" class="p-0"></label>
-            <input asp-for="ListPrice" class="form-control" />
-            <span asp-validation-for="ListPrice" class="text-danger"></span>
+            <label asp-for="Product.ListPrice" class="p-0"></label>
+            <input asp-for="Product.ListPrice" class="form-control" />
+            <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="Price" class="p-0"></label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
+            <label asp-for="Product.Price" class="p-0"></label>
+            <input asp-for="Product.Price" class="form-control" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="Price50" class="p-0"></label>
-            <input asp-for="Price50" class="form-control" />
-            <span asp-validation-for="Price50" class="text-danger"></span>
+            <label asp-for="Product.Price50" class="p-0"></label>
+            <input asp-for="Product.Price50" class="form-control" />
+            <span asp-validation-for="Product.Price50" class="text-danger"></span>
         </div>
         <div class="mb-3 p-1 row">
-            <label asp-for="Price100" class="p-0"></label>
-            <input asp-for="Price100" class="form-control" />
-            <span asp-validation-for="Price100" class="text-danger"></span>
+            <label asp-for="Product.Price100" class="p-0"></label>
+            <input asp-for="Product.Price100" class="form-control" />
+            <span asp-validation-for="Product.Price100" class="text-danger"></span>
+        </div>
+        <div class="mb-3 p-1 row">
+            <label asp-for="Product.CategoryID" class="p-0"></label>
+            @* ViewBag
+            <select asp-for="CategoryID" asp-items="ViewBag.CategoryList" class="form-select">
+                <!--make sure key value name of viewbag matches"-->
+                <option disabled selected>--Select Category--</option>
+            </select> <!--dropdowm-->
+            *@
+            @*
+            <select asp-for="Product.CategoryID" asp-items="@ViewData["CatergoryList"] as IEnumerable<SelectListItem>" class="form-select">
+                <!--manuel casting-->
+                <option disabled selected>--Select Category--</option>
+            </select> <!--dropdowm-->
+            *@
+            <select asp-for="Product.CategoryID" asp-items="@Model.CategoryList" class="form-select"> @*Reaching CateogryList of ViewModel class*@
+                <!--manuel casting-->
+                <option disabled selected>--Select Category--</option>
+            </select> <!--dropdowm-->
+        </div>
+        <div class="mb-3 p-1 row">
+            <label asp-for="Product.ImageUrl" class="p-0"></label>
+            <input type="file" class="form-control" />
         </div>
         <div class="row">
             <div class="col-6 col-md-6">
