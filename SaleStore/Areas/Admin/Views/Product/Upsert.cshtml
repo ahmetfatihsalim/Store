@@ -59,7 +59,7 @@
         </div>
         <div class="mb-3 p-1 row">
             <label asp-for="Product.ImageUrl" class="p-0"></label>
-            <input type="file" class="form-control" />
+            <input type="file" name="file" class="form-control" /> <!--use name property so the ImageUrl does not pass to controller as null-->
         </div>
         <div class="row">
             <div class="col-6 col-md-6">

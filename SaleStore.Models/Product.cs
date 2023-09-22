@@ -11,11 +11,6 @@ namespace SaleStore.Model
 {
     public class Product
     {
-        public Product()
-        {
-            ImageUrl= "";
-        }
-
         [Key]
         public int ID { get; set; }
         [Required]

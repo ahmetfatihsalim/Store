@@ -10,10 +10,12 @@ namespace SaleStore.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment; // to access ImageUrl root path
 
-        public ProductController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork; // Example dependecy Injection
+            _webHostEnvironment = webHostEnvironment;   
         }
 
         public IActionResult Index()
@@ -164,6 +166,20 @@ namespace SaleStore.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath; // to access ImageUrl root path
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + /*to preserve file's extention*/ Path.GetExtension(file.FileName);// rename the file to a random GUID
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName),FileMode.Create)) //save image to related location
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productViewModel.Product.ImageUrl = @"\images\product" + fileName;
+                }
+
                 _unitOfWork.ProductRepository.Add(productViewModel.Product);
                 _unitOfWork.Save();
                 TempData["Success"] = "Product created successfully";
