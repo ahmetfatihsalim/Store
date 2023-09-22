@@ -172,15 +172,33 @@ namespace SaleStore.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + /*to preserve file's extention*/ Path.GetExtension(file.FileName);// rename the file to a random GUID
                     string productPath = Path.Combine(wwwRootPath, @"images\product");
 
+                    if (!string.IsNullOrEmpty(productViewModel.Product.ImageUrl)) // update // checking if there is an already image for our product
+                    {
+                        // delete and replace the image
+                        var oldImagePath = Path.Combine(wwwRootPath, productViewModel.Product.ImageUrl.TrimStart('\\') /*we trim the backslash because we are using path combine*/);
+
+                        if (System.IO.File.Exists(oldImagePath)) // check if anything exists in that path
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName),FileMode.Create)) //save image to related location
                     {
                         file.CopyTo(fileStream);
                     }
 
-                    productViewModel.Product.ImageUrl = @"\images\product" + fileName;
+                    productViewModel.Product.ImageUrl = @"\images\product\" + fileName;
                 }
 
-                _unitOfWork.ProductRepository.Add(productViewModel.Product);
+                if (productViewModel.Product.ID == 0)
+                {
+                    _unitOfWork.ProductRepository.Add(productViewModel.Product);
+                }
+                else
+                {
+                    _unitOfWork.ProductRepository.Update(productViewModel.Product);
+                }
                 _unitOfWork.Save();
                 TempData["Success"] = "Product created successfully";
             }

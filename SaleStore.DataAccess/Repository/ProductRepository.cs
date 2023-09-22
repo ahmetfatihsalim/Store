@@ -19,7 +19,23 @@ namespace SaleStore.DataAccess.Repository
 
         public void Update(Product product)
         {
-            _db.Products.Update(product);
+            var productFromDB = _db.Products.FirstOrDefault(dbProduct => dbProduct.ID == product.ID);
+            if (productFromDB != null)  // manual mapping
+            {
+                productFromDB.Title= product.Title;
+                productFromDB.Description= product.Description;
+                productFromDB.ISBN= product.ISBN;
+                productFromDB.Author= product.Author;
+                productFromDB.ListPrice= product.ListPrice;
+                productFromDB.Price= product.Price;
+                productFromDB.Price50= product.Price50;
+                productFromDB.Price100= product.Price100;
+                productFromDB.CategoryID= product.CategoryID;
+                if (productFromDB.ImageUrl != null)
+                {
+                    productFromDB.ImageUrl = product.ImageUrl;
+                }
+            }
         }
     }
 }
