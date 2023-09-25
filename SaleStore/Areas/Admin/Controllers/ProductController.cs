@@ -213,7 +213,7 @@ namespace SaleStore.Areas.Admin.Controllers
             return View(productViewModel);
         }
 
-        public IActionResult Delete(int? id)
+        /*public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
             {
@@ -241,6 +241,38 @@ namespace SaleStore.Areas.Admin.Controllers
             _unitOfWork.Save();
             TempData["Success"] = "Product deleted successfully";
             return RedirectToAction("Index");
+        }*/
+
+        #region APICalls
+
+        public IActionResult GetAll() 
+        {
+            List<Product> products = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category").ToList(); // This should be in a service. This looks disgusting
+            return Json(new { data = products });
         }
+
+        public IActionResult Delete(int? id)
+        {
+            var product = _unitOfWork.ProductRepository.GetFirstOrDefault(product => product.ID == id);
+            if (product == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+            _unitOfWork.ProductRepository.Remove(product);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete is successfull" });
+        }
+
+        #endregion
+
+
     }
 }

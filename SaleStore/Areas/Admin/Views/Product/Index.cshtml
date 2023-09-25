@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <table class="table table-bordered table-striped">
+    <table id="productTable" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Title</th>
@@ -27,9 +27,10 @@
                 <th>Price</th>
                 <th>Author</th>
                 <th>Category</th>
+                <th></th> <!--required for stupid datatables error-->
             </tr>
         </thead>
-        <tbody>
+        @*<tbody>
             @foreach (Product product in Model)
             {
                 <tr>
@@ -41,7 +42,7 @@
                     <td>
                         <div class="w-75 btn-group" role="group">
                             <a asp-action="Upsert" asp-route-id="@product.ID" class="btn btn-delete mx-2">
-                                @*asp-route property can be named based of the name of whatever parameter we are passing to controller. In this case the name of our parameter is "id"*@
+                                @*asp-route property can be named based of the name of whatever parameter we are passing to controller. In this case the name of our parameter is "id"@
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
                             <a asp-action="Delete" asp-route-id="@product.ID" class="btn btn-delete mx-2">
@@ -51,6 +52,10 @@
                     </td>
                 </tr>
             }
-        </tbody>
+        </tbody>@ instead we are using datatable*@
     </table>
 </div>
+
+@section Scripts{
+    <script src="~/js/product.js"></script> <!--js for datatable-->
+}
