@@ -20,8 +20,8 @@ namespace SaleStore.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Product> categories = _unitOfWork.ProductRepository.GetAll().ToList(); // This should be in a service. This looks disgusting
-            return View(categories);
+            List<Product> products = _unitOfWork.ProductRepository.GetAll(includeProperties:"Category").ToList(); // This should be in a service. This looks disgusting
+            return View(products);
         }
 
         #region Create Update Actions Before Upsert

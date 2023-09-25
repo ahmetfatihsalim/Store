@@ -35,17 +35,40 @@ namespace SaleStore.DataAccess.Repository
             dbSet.RemoveRange(entities);
         }
 
-        public IEnumerable<T> GetAll()
+        /// <summary>
+        /// Given parameter is for navigation. 
+        /// It will get related object keys which are seperated by whatever we define for seperation
+        /// Object key name must exactly match the name of property of the given T class
+        /// Related object is to be populated based on foreign key relation. 
+        /// Ex : _db.Products.Include(p => p.Category).Include(x => x.SomethingElse). ...;
+        /// </summary>
+        /// <param name="includeProperties"></param>
+        /// <returns></returns>
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet; // get the dbset
+            query = IncludePropertiesForNavigation(query, includeProperties);
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet; // get the dbset
             query = dbSet.Where(filter); // give our where clause
+            query = IncludePropertiesForNavigation(query, includeProperties);
             return query.FirstOrDefault(); // get the first result for thats what we want
+        }
+
+        private IQueryable<T> IncludePropertiesForNavigation(IQueryable<T> query, string? includeProperties = null) // I think this can be customized in different ways. I'm not gonna put this in interface
+        {
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+            return query;
         }
     }
 }

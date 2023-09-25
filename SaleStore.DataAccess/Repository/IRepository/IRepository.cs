@@ -10,8 +10,8 @@ namespace SaleStore.DataAccess.Repository.IRepository
     public interface IRepository<T> where T : class // Take a T object. This object will be class
     {
         // Generic interface for our classes and interaction with DB
-        IEnumerable<T> GetAll();
-        T GetFirstOrDefault(Expression<Func<T,bool>> filter); // we'll use a linq expression which is a function that takes T and returns boolean result
+        IEnumerable<T> GetAll(string? includeProperties = null);
+        T GetFirstOrDefault(Expression<Func<T,bool>> filter, string? includeProperties = null); // we'll use a linq expression which is a function that takes T and returns boolean result
         void Add(T entity);
 
         //void Update(T entity); // Update logic may vary so we dont add update function here
