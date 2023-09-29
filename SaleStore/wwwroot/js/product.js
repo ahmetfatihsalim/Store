@@ -6,7 +6,7 @@ $(function () {
 
 function loadProductDataTable() {
     productDataTable = $('#productTable').DataTable({
-        "ajax": { url: 'Product/GetAll' }, /* we might need more properties. thats wht this is an object*/
+        "ajax": { url: 'Product/GetAll' }, /* we might need more properties. thats why this is an object*/
         "columns": [
             { data: 'title', "width": "20%" },
             { data: 'isbn', "width": "10%" },
