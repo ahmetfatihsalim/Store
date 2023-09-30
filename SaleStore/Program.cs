@@ -15,7 +15,10 @@ builder.Services.AddControllersWithViews();
 // via a helper method we get the connection string
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+// When we add Identity to project, this line also adds identity tables
+builder.Services.AddDefaultIdentity<IdentityUser>(/*options => options.SignIn.RequireConfirmedAccount = true check if user's email is valid*/).AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddRazorPages(); // To show Identity pages. Identity Pages are Razor pages
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -34,8 +37,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Check if user credentials is valid
+app.UseAuthorization(); // If user is valid, authorize the user. Can//Can't access some pages
 
+app.MapRazorPages(); // To show Identity pages. Identity Pages are Razor pages
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");

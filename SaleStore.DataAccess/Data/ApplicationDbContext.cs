@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SaleStore.Model;
 
 namespace SaleStore.Data
 {
     // The class which we use to access EF
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser> // IdentityUser is optional
     {
         // We changed the inherited class from DbContext to IdentityDbContext so the EntityFramework Identity can detect and implement this class as DbContext
 
