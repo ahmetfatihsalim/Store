@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SaleStore.Model;
 
 namespace SaleStore.Data
 {
     // The class which we use to access EF
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
+        // We changed the inherited class from DbContext to IdentityDbContext so the EntityFramework Identity can detect and implement this class as DbContext
+
         //Basic Configuration
         // We inject/configure this dbcontext by getting the connection string as a parameter in the constructor in order to pass the connection 
         // string to this class as a dbcontext option and that we'll be passing on to the base class 
@@ -29,6 +32,11 @@ namespace SaleStore.Data
         // Every first time our application gets implemented data columns that defined here will be implemented to our database as well
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // The entity type 'IdentityUserLogin<string>' requires a primary key to be defined
+            // Keys of the identity tables are mapped on OnmodelCreating method
+            // One of the configurations that is needed
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Category>().HasData(
                 new Category { ID = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { ID = 2, Name = "SciFi", DisplayOrder = 2 },
