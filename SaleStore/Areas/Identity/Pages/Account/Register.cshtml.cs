@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SaleStore.Model;
 
 namespace SaleStore.Areas.Identity.Pages.Account
 {
@@ -116,7 +117,7 @@ namespace SaleStore.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, Input.Password); // inserts into ASPNetUsers table and encripts the password
 
                 if (result.Succeeded)
                 {
@@ -158,7 +159,7 @@ namespace SaleStore.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>(); // to create an application user rather than identity user
             }
             catch
             {
