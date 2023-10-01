@@ -28,6 +28,7 @@ namespace SaleStore.Data
         // yay magic... not really
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         // Overriding our data model by adding default values to our db
         // Every first time our application gets implemented data columns that defined here will be implemented to our database as well
