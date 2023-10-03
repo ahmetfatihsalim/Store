@@ -15,7 +15,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SaleStore.Model;
@@ -102,6 +104,11 @@ namespace SaleStore.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string Role { get; set; }
+
+            [ValidateNever]
+            public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
 
@@ -117,6 +124,15 @@ namespace SaleStore.Areas.Identity.Pages.Account
                 _roleManager.CreateAsync(new IdentityRole(StaticDetail.Role_Employee)).GetAwaiter().GetResult();
             }
 
+            Input = new()
+            {
+                RoleList = _roleManager.Roles.Select(role => role.Name).Select(role => new SelectListItem
+                {
+                    Text = role,
+                    Value = role
+                })
+            };
+            
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -133,9 +149,18 @@ namespace SaleStore.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password); // inserts into ASPNetUsers table and encripts the password
 
-                if (result.Succeeded)
+                if (result.Succeeded) // if user successfully created
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    if (!string.IsNullOrEmpty(Input.Role))
+                    {
+                        await _userManager.AddToRoleAsync(user, Input.Role); // carefull when selecting this function. There is also AddToRolesAsync as of 10.2023
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, StaticDetail.Role_Customer); // if user has nor role, assign them as customer
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

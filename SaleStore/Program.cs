@@ -19,7 +19,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 // When we add Identity to project, this line also adds identity tables
 // Implement IEmailSender or shit brakes because we no longer use AddDefaultIdentity. We added custom implementation
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(/*options => options.SignIn.RequireConfirmedAccount = true check if user's email is valid*/).AddEntityFrameworkStores<ApplicationDbContext>();
+// AddDefaultTokenProviders is included in AddDefaultIdentity but not in AddIdentity. We need it for Emailconfirmation tokens -> var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(/*options => options.SignIn.RequireConfirmedAccount = true check if user's email is valid*/).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddRazorPages(); // To show Identity pages. Identity Pages are Razor pages
 
