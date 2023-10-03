@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SaleStore.DataAccess\SaleStore.DataAccess.csproj" />
     <ProjectReference Include="..\SaleStore.Models\SaleStore.Model.csproj" />
+    <ProjectReference Include="..\SaleStore.Utility\SaleStore.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

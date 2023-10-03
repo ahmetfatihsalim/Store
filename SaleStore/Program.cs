@@ -3,6 +3,8 @@ using SaleStore.Data;
 using SaleStore.DataAccess.Repository;
 using SaleStore.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SaleStore.Utility.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +18,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // When we add Identity to project, this line also adds identity tables
-builder.Services.AddDefaultIdentity<IdentityUser>(/*options => options.SignIn.RequireConfirmedAccount = true check if user's email is valid*/).AddEntityFrameworkStores<ApplicationDbContext>();
+// Implement IEmailSender or shit brakes because we no longer use AddDefaultIdentity. We added custom implementation
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(/*options => options.SignIn.RequireConfirmedAccount = true check if user's email is valid*/).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages(); // To show Identity pages. Identity Pages are Razor pages
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
