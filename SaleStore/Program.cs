@@ -22,6 +22,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 // AddDefaultTokenProviders is included in AddDefaultIdentity but not in AddIdentity. We need it for Emailconfirmation tokens -> var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(/*options => options.SignIn.RequireConfirmedAccount = true check if user's email is valid*/).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+// Should be added after identity. No identity, no authorization
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+}); // to properly route to related pages in case of an unauthorized access attemt
+
 builder.Services.AddRazorPages(); // To show Identity pages. Identity Pages are Razor pages
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

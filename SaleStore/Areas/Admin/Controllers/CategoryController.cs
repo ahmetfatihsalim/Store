@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SaleStore.Data;
 using SaleStore.DataAccess.Repository.IRepository;
 using SaleStore.Model;
+using SaleStore.Utility;
 
 namespace SaleStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetail.Role_Admin)]// so users wont be able to see the unauthorized pages by simply writing their URLs
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -15,6 +18,7 @@ namespace SaleStore.Areas.Admin.Controllers
             _unitOfWork = unitOfWork; // Example dependecy Injection
         }
 
+        //[Authorize(Roles = StaticDetail.Role_Admin)] // can also be applied individually
         public IActionResult Index()
         {
             List<Category> categories = _unitOfWork.CategoryRepository.GetAll().ToList(); // This should be in a service. This looks disgusting
