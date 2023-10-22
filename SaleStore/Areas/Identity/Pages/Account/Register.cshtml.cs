@@ -27,6 +27,7 @@ namespace SaleStore.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        // IdentityUser T classes can be changed but we'll keep it as is
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager; // works on identity roles. yeah...
@@ -109,6 +110,14 @@ namespace SaleStore.Areas.Identity.Pages.Account
 
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+
+            [Required]
+            public string Name { get; set; }
+            public string? StreetAddress { get; set; }
+            public string? City { get; set; }
+            public string? State { get; set; }
+            public string? PostalCode { get; set; }
+            public string? PhoneNumber { get; set; } // this is a default created property in DB
         }
 
 
@@ -147,6 +156,12 @@ namespace SaleStore.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.Name= Input.Name;
+                user.StreetAddress = Input.StreetAddress;
+                user.City = Input.City;
+                user.PostalCode = Input.PostalCode;
+                user.State= Input.State;
+                user.PhoneNumber= Input.PhoneNumber;
                 var result = await _userManager.CreateAsync(user, Input.Password); // inserts into ASPNetUsers table and encripts the password
 
                 if (result.Succeeded) // if user successfully created
@@ -194,7 +209,7 @@ namespace SaleStore.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser() // update the return type as well!!!
         {
             try
             {
